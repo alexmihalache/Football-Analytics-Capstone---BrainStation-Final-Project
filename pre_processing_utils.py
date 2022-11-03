@@ -1,11 +1,11 @@
-def create_team_data(team_col: str, team_id: int, player_col: str, player_id: int, train_df, test_df, target: str):
+def create_team_data(team_col: str, team_id: int, train_df, test_df, target: str):
 
     """
     Inputs: 
     - team_col:    the column to filter for team_id in
     - team_id:     the team to filter for
-    - player_col:  the column to filter for player_id in
-    - player_id:   the player to filter for
+    - player_col:  the column to filter for player_id in - DISABLED
+    - player_id:   the player to filter for - DISABLED
     - train_df:    the train dataset to filter 
     - test_df:     the test dataset to filter
     - target:      the value we want to predict, can be used for classification and regression models
@@ -45,6 +45,8 @@ def create_player_data(mode, train_df, test_df, player_id, **kwargs):
     """
     if mode == 'classification': 
 
+        # create the train and test sets - remove rows where the same player performed an action as those would leak into the model
+
         player_train_set = train_df[
             (train_df['player_id']==player_id)
             & (train_df['n-5_same_player']!=True)
@@ -52,7 +54,7 @@ def create_player_data(mode, train_df, test_df, player_id, **kwargs):
             & (train_df['n-3_same_player']!=True)
             & (train_df['n-2_same_player']!=True)
             & (train_df['n-1_same_player']!=True)
-            ]
+            ].dropna()
 
 
         player_test_set = test_df[
@@ -62,7 +64,7 @@ def create_player_data(mode, train_df, test_df, player_id, **kwargs):
             & (test_df['n-3_same_player']!=True)
             & (test_df['n-2_same_player']!=True)
             & (test_df['n-1_same_player']!=True)
-            ]
+            ].dropna()
 
         X_train = player_train_set.drop(columns=['type_name_encoded', 'end_pitch_zone'])
         y_train_action = player_train_set['type_name_encoded']
@@ -251,6 +253,7 @@ def set_ct_mode(mode):
         return numeric_features, categorical_features, drop_features
     
     if (mode == 'player-vaep') | (mode == 'team-vaep'):
+        
         numeric_features = [
             'start_x',
             'start_y',

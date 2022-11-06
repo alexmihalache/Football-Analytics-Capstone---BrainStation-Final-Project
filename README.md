@@ -1,3 +1,11 @@
+# Football Transfer Performance
+
+This is the capstone project I completed as part of the BrainStation London Data Science bootcamp.
+
+The aim of the project is to research whether we can predict how a football player may perform in a new team, as part of a transfer.
+
+
+
 | **File**                                                      | **Description**                                                                                                                                                                                         |
 |---------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Notebook 1 - Data and Tools                                   | This notebook is a simple exploration of the data and the tools provided by the SoccerAction Library. In this notebook I explore the actions of single match in the data set.                           |
